@@ -1,0 +1,17 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="card col-md-12">
+        <div class="card-header">
+            <h1><i class="fas fa-home"></i> Symfony Demo</h1>
+        </div>
+        <div class="card-body">
+            <div class="card clickable" onclick="location = '{{path ('boutique_page') }} '">
+                <img src="{{ asset( 'images/epicerie.jpg') }}" class="card-img-top" alt="Logo Boutique Symfony"/>
+                <div class="card-body">
+                    <p class="card-text"><i> {% trans %}Ici rien à vendre, c'est juste pour apprendre{% endtrans %}</i></p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

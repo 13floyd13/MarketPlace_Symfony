@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="fr" target-language="fr" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="BZ6Haky" resname="default.index.message_bienvenue">
+        <source>default.index.message_bienvenue</source>
+        <target>Bienvenue</target>
+      </trans-unit>
+      <trans-unit id="fCaiLfD" resname="Ici rien à vendre, c'est juste pour apprendre">
+        <source>Ici rien à vendre, c'est juste pour apprendre</source>
+        <target>Ici rien à vendre, c'est juste pour apprendre</target>
+      </trans-unit>
+      <trans-unit id="K7iKgAf" resname="Boutique">
+        <source>Boutique</source>
+        <target>Boutique</target>
+      </trans-unit>
+      <trans-unit id="spGfShe" resname="1 Produit(s)">
+        <source>1 Produit(s)</source>
+        <target>1 Produit(s)</target>
+      </trans-unit>
+      <trans-unit id="K1w9JnI" resname="Contact">
+        <source>Contact</source>
+        <target>Contact</target>
+      </trans-unit>
+      <trans-unit id="YdaVBBA" resname="Connexion">
+        <source>Connexion</source>
+        <target>Connexion</target>
+      </trans-unit>
+      <trans-unit id="eIze27x" resname="Connexion/Inscription">
+        <source>Connexion/Inscription</source>
+        <target>Connexion/Inscription</target>
+      </trans-unit>
+      <trans-unit id="_IUmfLU" resname="Mon Compte">
+        <source>Mon Compte</source>
+        <target>Mon Compte</target>
+      </trans-unit>
+      <trans-unit id="V.0DQFf" resname="Mes Commandes">
+        <source>Mes Commandes</source>
+        <target>Mes Commandes</target>
+      </trans-unit>
+      <trans-unit id="_1_eksG" resname="Déconnexion">
+        <source>Déconnexion</source>
+        <target>Déconnexion</target>
+      </trans-unit>
+      <trans-unit id="qa92GvT" resname="top ventes">
+        <source>top ventes</source>
+        <target>top ventes</target>
+      </trans-unit>
+      <trans-unit id="FxOshME" resname="ventes">
+        <source>ventes</source>
+        <target>ventes</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

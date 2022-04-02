@@ -1,3 +1,110 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+#home:
+ # path: /{_locale}
+ # controller: App\Controller\DefaultController::index
+ # requirements:
+ #   _locale: '%app.supported_locales%'
+ # defaults:
+  #  _locale: fr
+
+#contact:
+ # path: /{_locale}/contact
+ # controller: App\Controller\DefaultController::contact
+ # requirements:
+ #   _locale: '%app.supported_locales%'
+
+accueil_page:
+  path: /{_locale}
+  controller: App\Controller\DefaultController::accueil
+  requirements:
+    _locale: '%app.supported_locales%'
+  defaults:
+    _locale: fr
+
+contact_page:
+  path: /{_locale}/contact
+  controller: App\Controller\DefaultController::contact
+  requirements:
+    _locale: '%app.supported_locales%'
+  defaults:
+    _locale: fr
+
+
+boutique_page:
+  path: /{_locale}/boutique
+  controller: App\Controller\BoutiqueController::index
+  requirements:
+    _locale: '%app.supported_locales%'
+  defaults:
+    _locale: fr
+
+
+rayon_page:
+  path: /{_locale}/boutique/rayon/{idCategorie}
+  controller: App\Controller\BoutiqueController::rayon
+  requirements:
+    _locale: '%app.supported_locales%'
+  defaults:
+    _locale: fr
+
+recherche_page:
+  path: /{_locale}/boutique/chercher/{recherche}
+  controller: App\Controller\BoutiqueController::recherche
+  requirements:
+    _locale: '%app.supported_locales%'
+  defaults:
+    _locale: fr
+
+panier_index:
+  path: /{_locale}/panier
+  controller: App\Controller\PanierController::index
+  requirements:
+    _locale: '%app.supported_locales%'
+  defaults:
+    _locale: fr
+
+panier_supprimer_ligne:
+  path: /{_locale}/panier/supprimer/{idProduit}
+  controller: App\Controller\PanierController::supprimerLigne
+  requirements:
+    _locale: '%app.supported_locales%'
+  defaults:
+    _locale: fr
+
+panier_ajouter:
+  path: /{_locale}/panier/{idProduit}/{quantite}
+  controller: App\Controller\PanierController::ajoutProduit
+  requirements:
+    _locale: '%app.supported_locales%'
+  defaults:
+    _locale: fr
+
+panier_enlever_quantite:
+  path: /{_locale}/panier/enlever/{idProduit}/{quantite}
+  controller: App\Controller\PanierController::enleverQuantite
+  requirements:
+    _locale: '%app.supported_locales%'
+  defaults:
+    _locale: fr
+
+panier_ajouter_quantite:
+  path: /{_locale}/panier/ajouter/{idProduit}/{quantite}
+  controller: App\Controller\PanierController::ajouterQuantite
+  requirements:
+    _locale: '%app.supported_locales%'
+  defaults:
+    _locale: fr
+
+
+
+
+panier_vider:
+  path: /{_locale}/panier/vider
+  controller: App\Controller\PanierController::viderPanier
+  requirements:
+    _locale: '%app.supported_locales%'
+  defaults:
+    _locale: fr

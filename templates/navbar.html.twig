@@ -1,0 +1,100 @@
+{# templates/navbar.html.twig #}
+
+
+<!-- debut de la navbar -->
+        
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="/{{ app.request.attributes.get('_locale') }}/">
+        <i class="fas fa-home"></i> Démo SF    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/{{ app.request.attributes.get('_locale') }}/boutique">
+                    <i class="fas fa-store"></i> {% trans %}Boutique {% endtrans %} </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/{{ app.request.attributes.get('_locale') }}/panier">
+                    {{ render(controller('App\\Controller\\DefaultController::navBar')) }}
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/{{ app.request.attributes.get('_locale') }}/contact">
+                    <i class="fas fa-comments"></i>  {% trans %}Contact {% endtrans %}</a>
+            </li>
+            <li class="nav-item dropdown">
+                <span class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-user"></i>  {% trans %}Connexion{% endtrans %}</span>
+                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                    <a class="dropdown-item " href="/mi5/fr/login">
+                         {% trans %}Connexion/Inscription{% endtrans %}</a>
+                    <a class="dropdown-item disabled" href="/{{ app.request.attributes.get('_locale') }}/usager/compte">
+                         {% trans %}Mon Compte {% endtrans %}</a>
+                    <a class="dropdown-item disabled" href="/{{ app.request.attributes.get('_locale') }}/usager/commandes">
+                         {% trans %}Mes Commandes {% endtrans %}</a>
+                    <a class="dropdown-item disabled" href="/{{ app.request.attributes.get('_locale') }}/logout">
+                          {% trans %}Déconnexion {% endtrans %}</a>
+                </div>
+            </li>
+            <li class="nav-item" 
+                data-toggle="tooltip" title="Ne devra être visible que pour l'Admin" data-placement="right" data-html="true">
+                <span class="nav-link disabled" href="">
+                    <i class="fas fa-tools"></i> BackOffice
+                </span>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" id="searchString" type="text" 
+                   placeholder="Chercher Produits..." aria-label="Search">
+            <button class="btn btn-secondary my-2 my-sm-0" id="searchButton">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+                    <ul class="navbar-nav my-0">
+                <li class="nav-item dropdown">
+                    <span class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        EUR
+                    </span>
+                    <div class="dropdown-menu" aria-labelledby="dropdown02"  style="min-width: 5rem;">
+                                                                                                                                        <a class="dropdown-item" href="/mi5/fr/changer_monnaie/CAD/home/%7B%22_locale%22:%22fr%22%7D">
+                                    CAD
+                                </a>
+                                                                                                                <a class="dropdown-item" href="/mi5/fr/changer_monnaie/USD/home/%7B%22_locale%22:%22fr%22%7D">
+                                    USD
+                                </a>
+                                                                                                                <a class="dropdown-item" href="/mi5/fr/changer_monnaie/GBP/home/%7B%22_locale%22:%22fr%22%7D">
+                                    GBP
+                                </a>
+                                                                                                                <a class="dropdown-item" href="/mi5/fr/changer_monnaie/PHP/home/%7B%22_locale%22:%22fr%22%7D">
+                                    PHP
+                                </a>
+                                                                                                                <a class="dropdown-item" href="/mi5/fr/changer_monnaie/IDR/home/%7B%22_locale%22:%22fr%22%7D">
+                                    IDR
+                                </a>
+                                                                        </div>
+                </li>
+            </ul>
+                <ul class="navbar-nav my-0">
+            <li class="nav-item dropdown">
+                <span class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="{{ asset('images/fr.png') }}" alt="{{ app.request.attributes.get('_locale')}}">
+                </span>
+                <div class="dropdown-menu" aria-labelledby="dropdown03" style="min-width: 5rem;">
+                    {% for locale in supported_locales|split('|') %}
+                        {% if locale != app.request.attributes.get('_locale') %}
+                            {% set route = app.request.attributes.get('_route') %}
+                            {% set params = app.request.attributes.get('_route_params') %}
+
+                            <a class="dropdown-item" href="{{ path(route, params | merge({'_locale': locale })) }}">
+                                <img src="{{ asset('images/en.png') }}" alt="{{ locale }}">
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                            
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+        <!-- fin de la navbar -->

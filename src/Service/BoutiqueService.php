@@ -1,10 +1,15 @@
 <?php
 namespace App\Service;
+
+use Doctrine\ORM\Mapping\Id;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 // Un service pour manipuler le contenu de la Boutique
 //  qui est composée de catégories et de produits stockés "en dur"
 class BoutiqueService {
+
+    private $prodRepo;
+    private $catRepo;
 
     // renvoie toutes les catégories
     public function findAllCategories() {
@@ -59,6 +64,12 @@ class BoutiqueService {
             return $this->compareSelonLocale($c1["libelle"], $c2["libelle"]);
         });
     }
+
+    /*public function __construct($prodRepo, $catRepo)
+    {
+        $this->prodRepo = $prodRepo;
+        $this->catRepo = $catRepo;
+    }*/
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -174,4 +185,4 @@ class BoutiqueService {
         $this->prodRepo = $prodRepo
         ...
     }
-}
+}*/

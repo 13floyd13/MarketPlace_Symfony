@@ -42,7 +42,7 @@ public function getTotal() { // à compléter }
     foreach($this->panier as $id => $qte){
         
         $produit = $this->boutique->findProduitById($id);
-        $prixUnitaire = $produit['prix'];
+        $prixUnitaire = $produit->getPrix();
         $total += $prixUnitaire * $qte;
     }
 

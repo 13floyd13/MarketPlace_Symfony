@@ -3,6 +3,8 @@ namespace App\Service;
 
 use Doctrine\ORM\Mapping\Id;
 use Symfony\Component\HttpFoundation\RequestStack;
+use App\Repository\CategorieRepository;
+use App\Repository\ProduitRepository ;
 
 // Un service pour manipuler le contenu de la Boutique
 //  qui est composée de catégories et de produits stockés "en dur"
@@ -11,39 +13,53 @@ class BoutiqueService {
     private $prodRepo;
     private $catRepo;
 
+    public function __construct(RequestStack $requestStack,ProduitRepository $prodRepo,CategorieRepository $catRepo)
+    {
+        // Injection du service RequestStack
+        //  afin de pouvoir récupérer la "locale" dans la requête en cours
+        $this->requestStack = $requestStack;
+        $this->prodRepo = $prodRepo;
+        $this->catRepo = $catRepo;
+    }
+
     // renvoie toutes les catégories
     public function findAllCategories() {
-        return $this->categories;
+        return $this->catRepo->findAll();
+        //return $this->categories;
     }
 
     // renvoie la categorie dont id == $idCategorie
     public function findCategorieById(int $idCategorie) {
-        $res = array_filter($this->categories,
+        return $this->catRepo->findOneById($idCategorie);
+        /*$res = array_filter($this->categories,
                 function ($c) use($idCategorie) {
             return $c["id"] == $idCategorie;
         });
-        return (sizeof($res) === 1) ? $res[array_key_first($res)] : null;
+        return (sizeof($res) === 1) ? $res[array_key_first($res)] : null;*/
     }
 
     // renvoie le produits dont id == $idProduit
     public function findProduitById(int $idProduit) {
-        $res = array_filter($this->produits,
+        return $this->prodRepo->findOneById($idProduit);
+        /*$res = array_filter($this->produits,
                 function ($p) use($idProduit) {
             return $p["id"] == $idProduit;
         });
-        return (sizeof($res) === 1) ? $res[array_key_first($res)] : null;
+        return (sizeof($res) === 1) ? $res[array_key_first($res)] : null;*/
     }
 
     // renvoie tous les produits dont idCategorie == $idCategorie
     public function findProduitsByCategorie(int $idCategorie) {
-        return array_filter($this->produits,
+        return $this->prodRepo->findByCategorie($idCategorie);
+        /*return array_filter($this->produits,
                 function ($p) use($idCategorie) {
             return $p["idCategorie"] == $idCategorie;
-        });
+        });*/
     }
 
     // renvoie tous les produits dont libelle ou texte contient $search
     public function findProduitsByLibelleOrTexte(string $search) {
+
         return array_filter($this->produits,
                 function ($p) use ($search) {
                   return ($search=="" || mb_strpos(mb_strtolower($p["libelle"]." ".$p["texte"]), mb_strtolower($search)) !== false);
@@ -51,7 +67,7 @@ class BoutiqueService {
     }
 
     // constructeur du service : injection des dépendances et tris
-    public function __construct(RequestStack $requestStack) {
+    /*public function __construct(RequestStack $requestStack) {
         // Injection du service RequestStack
         //  afin de pouvoir récupérer la "locale" dans la requête en cours
         $this->requestStack = $requestStack;
@@ -63,13 +79,9 @@ class BoutiqueService {
         usort($this->produits, function ($c1, $c2) {
             return $this->compareSelonLocale($c1["libelle"], $c2["libelle"]);
         });
-    }
-
-    /*public function __construct($prodRepo, $catRepo)
-    {
-        $this->prodRepo = $prodRepo;
-        $this->catRepo = $catRepo;
     }*/
+
+    
 
     ////////////////////////////////////////////////////////////////////////////
 

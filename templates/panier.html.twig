@@ -32,32 +32,32 @@
                         {% for ligne in lignes %}
                                                             <tr>
                                     <td>
-                                        <img src="{{ asset( ligne['produit']['visuel'] ) }}" class="cart-img-produit" alt={{ ligne['produit']['libelle'] }}>
+                                        <img src="{{ asset( ligne['produit'].getVisuel() ) }}" class="cart-img-produit" alt={{ ligne['produit'].getLibelle() }}>
                                     </td>
                                     <td> 
-                                        <a href="{{ path('panier_index', { 'idProduit' : ligne.produit['id'] }) }}">
-                                            <b>{{ ligne.produit.libelle }}</b>
+                                        <a href="{{ path('panier_index', { 'idProduit' : ligne.produit.getId() }) }}">
+                                            <b>{{ ligne.produit.getLibelle() }}</b>
                                         </a>
                                     </td>
                                     <td class="text-right">
-                                        {{ ligne.produit.prix }} €
+                                        {{ ligne.produit.getPrix() }} €
                                     </td>
                                     <td>
-                                        <a href="{{ path('panier_enlever_quantite', { 'idProduit' : ligne.produit['id'], 'quantite' : 1 }) }}">
+                                        <a href="{{ path('panier_enlever_quantite', { 'idProduit' : ligne.produit.getId(), 'quantite' : 1 }) }}">
                                             <i class="fas fa-minus-square text-muted"></i>
                                         </a>
                                         {{ligne.quantite}}
-                                        <a href="{{ path('panier_ajouter_quantite', { 'idProduit' : ligne.produit['id'], 'quantite' : 1 }) }}">
+                                        <a href="{{ path('panier_ajouter_quantite', { 'idProduit' : ligne.produit.getId(), 'quantite' : 1 }) }}">
                                             <i class="fas fa-plus-square text-muted"></i>
                                         </a>
                                     </td>
                                     <td class="text-right">
-                                        {{ ligne.produit.prix * ligne.quantite }} €
+                                        {{ ligne.produit.getPrix() * ligne.quantite }} €
                                     </td>
                                     <td>
-                                        <a href="{{ path('panier_supprimer_ligne', { 'idProduit' : ligne.produit['id'] }) }}">
+                                        <a href="{{ path('panier_supprimer_ligne', { 'idProduit' : ligne.produit.getId() }) }}">
                                             <i class="fas fa-trash text-muted"
-                                               data-toggle="tooltip" title="Supprimer {{ligne.produit.libelle}}" 
+                                               data-toggle="tooltip" title="Supprimer {{ligne.produit.getLibelle()}}" 
                                                data-placement="right" data-html="true"></i>
                                         </a>
                                     </td>

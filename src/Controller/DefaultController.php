@@ -7,15 +7,18 @@ use App\Service\PanierService;
 
 class DefaultController extends AbstractController {
 
+    // affichage de la page d'accueil du site
     public function accueil() {
         return $this->render("accueil.html.twig");
     }
 
+    // affichage de la page de contact
     public function contact() {
               
         return $this->render("contact.html.twig");
     }
 
+    // envoie dans la barre de navigation le nombre de produits mis dans le panier
     public function navBar(PanierService $panier) {
 
         $nbArticles = $panier->getNbProduits();

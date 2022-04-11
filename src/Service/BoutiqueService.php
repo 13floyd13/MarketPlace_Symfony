@@ -22,13 +22,15 @@ class BoutiqueService {
         $this->catRepo = $catRepo;
     }
 
-    // renvoie toutes les catégories
+    // renvoie toutes les catégories présentes en BD
+    // à l'aide de repository de la classe Categorie
     public function findAllCategories() {
         return $this->catRepo->findAll();
         //return $this->categories;
     }
 
-    // renvoie la categorie dont id == $idCategorie
+    // renvoie la categorie en fonction de son id passé en paramètre
+    // utilisation du repository de la classe Categorie
     public function findCategorieById(int $idCategorie) {
         return $this->catRepo->findOneById($idCategorie);
         /*$res = array_filter($this->categories,
@@ -38,7 +40,8 @@ class BoutiqueService {
         return (sizeof($res) === 1) ? $res[array_key_first($res)] : null;*/
     }
 
-    // renvoie le produits dont id == $idProduit
+    // renvoie le produit en fonction de son id
+    // utilisation du repository de la classe Produit
     public function findProduitById(int $idProduit) {
         return $this->prodRepo->findOneById($idProduit);
         /*$res = array_filter($this->produits,
@@ -48,7 +51,9 @@ class BoutiqueService {
         return (sizeof($res) === 1) ? $res[array_key_first($res)] : null;*/
     }
 
-    // renvoie tous les produits dont idCategorie == $idCategorie
+
+    // renvoie tous les produits d'une catégorie, en fonction de l'id de cette catégorie
+    // utilisation du repository de la classe Categorie
     public function findProduitsByCategorie(int $idCategorie) {
         return $this->prodRepo->findByCategorie($idCategorie);
         /*return array_filter($this->produits,
@@ -59,11 +64,11 @@ class BoutiqueService {
 
     // renvoie tous les produits dont libelle ou texte contient $search
     public function findProduitsByLibelleOrTexte(string $search) {
-
-        return array_filter($this->produits,
+        return $this->prodRepo->findByLibelle($search);
+        /*return array_filter($this->produits,
                 function ($p) use ($search) {
                   return ($search=="" || mb_strpos(mb_strtolower($p["libelle"]." ".$p["texte"]), mb_strtolower($search)) !== false);
-        });
+        });*/
     }
 
     // constructeur du service : injection des dépendances et tris

@@ -45,6 +45,21 @@ class ProduitRepository extends ServiceEntityRepository
         }
     }
 
+    //fonction permettant de récuperer un produit 
+    //en fonction d'un mot entré dans la barre de recherche
+    public function findByLibelle(string $search): array {
+
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery(
+            'SELECT p
+             FROM App\Entity\Produit p
+             WHERE LIBELLE Like %search%'
+        )->setParameter('search', $search);
+
+        return $query->getResult();
+
+    }
+
     // /**
     //  * @return Produit[] Returns an array of Produit objects
     //  */

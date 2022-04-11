@@ -9,10 +9,12 @@ use Doctrine\Persistence\ObjectManager;
 
 class AppFixtures extends Fixture
 {
+    // constantes permettant de lier un produit à une catégorie
     private const CATEGORIE_LEGUME = "legume";
     private const CATEGORIE_FRUIT = "fruit";
     private const CATEGORIE_JUNK_FOOD = "junk food";
 
+    // liste des catégories insérés dans la BD
     private $categories = [
         [
             "id" => 1,
@@ -32,6 +34,8 @@ class AppFixtures extends Fixture
             "visuel" => "images/legumes.jpg",
             "texte" => "Plus tu en manges, moins tu en es un"],
     ];
+
+    // liste des produits insérés dans la BD
     private $produits = [
         [
             "id" => 1,
@@ -106,10 +110,15 @@ class AppFixtures extends Fixture
             "prix" => 2.50
         ],
     ];
+
+    // fonction d'ajout dans la BD
+    // premiere boucle intègre les categories en base
+    // récuperation du libelle pour ajouter une référence sur la catégorie
+    // deuxième boucle pour insérer les produits
+    // jointure avec la catégorie faite en fonction des produits à l'aide de la référence
     public function load(ObjectManager $manager): void
     {
-        // $product = new Product();
-        // $manager->persist($product);
+        
         foreach($this->categories as $i => $metadata) {
 
             $categorie = new Categorie();
@@ -117,6 +126,7 @@ class AppFixtures extends Fixture
             $categorie->setVisuel($metadata["visuel"]);
             $categorie->setTexte($metadata["texte"]);
 
+            // gestion de la peristence de l'objet Categorie
             $manager->persist($categorie);
 
             switch ($metadata["libelle"]) {
@@ -136,6 +146,7 @@ class AppFixtures extends Fixture
             
         }
 
+        // mise à jour de la BD 
         $manager->flush();
 
         foreach($this->produits as $i => $metadata) {
@@ -161,10 +172,11 @@ class AppFixtures extends Fixture
                     break;
             }
             
-
+            // gestion de la peristence de l'objet Produit
             $manager->persist($produit);
         }
 
+        // mise à jour de la BD 
         $manager->flush();
 
 

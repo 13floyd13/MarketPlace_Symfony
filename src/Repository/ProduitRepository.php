@@ -47,6 +47,7 @@ class ProduitRepository extends ServiceEntityRepository
 
     //fonction permettant de récuperer un produit 
     //en fonction d'un mot entré dans la barre de recherche
+    //la recherche se fait sur le libelle du produit ou son texte de description
     public function findByLibelle(string $search): array {
 
         $entityManager = $this->getEntityManager();

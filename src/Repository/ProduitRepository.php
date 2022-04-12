@@ -53,8 +53,9 @@ class ProduitRepository extends ServiceEntityRepository
         $query = $entityManager->createQuery(
             'SELECT p
              FROM App\Entity\Produit p
-             WHERE LIBELLE Like %search%'
-        )->setParameter('search', $search);
+             WHERE p.libelle LIKE :search
+             OR p.texte like :search'
+        )->setParameter('search', '%'.$search.'%');
 
         return $query->getResult();
 

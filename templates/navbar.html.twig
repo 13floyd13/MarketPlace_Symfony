@@ -27,7 +27,7 @@
                 <span class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fas fa-user"></i>  {% trans %}Connexion{% endtrans %}</span>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item " href="/mi5/fr/login">
+                    <a class="dropdown-item " href="/{{ app.request.attributes.get('_locale') }}/usager/connexion">
                          {% trans %}Connexion/Inscription{% endtrans %}</a>
                     <a class="dropdown-item disabled" href="/{{ app.request.attributes.get('_locale') }}/usager/compte">
                          {% trans %}Mon Compte {% endtrans %}</a>
@@ -57,23 +57,23 @@
                         EUR
                     </span>
                     <div class="dropdown-menu" aria-labelledby="dropdown02"  style="min-width: 5rem;">
-                                                                                                                                        <a class="dropdown-item" href="/mi5/fr/changer_monnaie/CAD/home/%7B%22_locale%22:%22fr%22%7D">
-                                    CAD
-                                </a>
-                                                                                                                <a class="dropdown-item" href="/mi5/fr/changer_monnaie/USD/home/%7B%22_locale%22:%22fr%22%7D">
-                                    USD
-                                </a>
-                                                                                                                <a class="dropdown-item" href="/mi5/fr/changer_monnaie/GBP/home/%7B%22_locale%22:%22fr%22%7D">
-                                    GBP
-                                </a>
-                                                                                                                <a class="dropdown-item" href="/mi5/fr/changer_monnaie/PHP/home/%7B%22_locale%22:%22fr%22%7D">
-                                    PHP
-                                </a>
-                                                                                                                <a class="dropdown-item" href="/mi5/fr/changer_monnaie/IDR/home/%7B%22_locale%22:%22fr%22%7D">
-                                    IDR
-                                </a>
-                                                                        </div>
-                </li>
+                        <a class="dropdown-item" href="/mi5/fr/changer_monnaie/CAD/home/%7B%22_locale%22:%22fr%22%7D">
+                            CAD
+                        </a>
+                        <a class="dropdown-item" href="/mi5/fr/changer_monnaie/USD/home/%7B%22_locale%22:%22fr%22%7D">
+                            USD
+                        </a>
+                        <a class="dropdown-item" href="/mi5/fr/changer_monnaie/GBP/home/%7B%22_locale%22:%22fr%22%7D">
+                            GBP
+                        </a>
+                        <a class="dropdown-item" href="/mi5/fr/changer_monnaie/PHP/home/%7B%22_locale%22:%22fr%22%7D">
+                            PHP
+                        </a>
+                        <a class="dropdown-item" href="/mi5/fr/changer_monnaie/IDR/home/%7B%22_locale%22:%22fr%22%7D">
+                            IDR
+                        </a>
+    </div>
+            </li>
             </ul>
                 <ul class="navbar-nav my-0">
             <li class="nav-item dropdown">

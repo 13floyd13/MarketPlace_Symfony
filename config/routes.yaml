@@ -124,8 +124,16 @@ app_logout :
     _locale: fr
 
 accueil_usager:
-  path: /{_locale}
-  controller: App\Controller\DefaultController::accueil
+  path: /{_locale}/usager/accueil
+  controller: App\Controller\UsagerController::index
+  requirements:
+    _locale: '%app.supported_locales%'
+  defaults:
+    _locale: fr
+
+inscription_usager:
+  path: /{_locale}/usager/connexion
+  controller: App\Controller\UsagerController::new
   requirements:
     _locale: '%app.supported_locales%'
   defaults:

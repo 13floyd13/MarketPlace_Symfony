@@ -59,11 +59,11 @@ class UsagerController extends AbstractController
             //return $this->redirectToRoute('app_usager_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->redirectToRoute('usager/index.html.twig');
-        /*return $this->renderForm('usager/new.html.twig', [
+        //return $this->redirectToRoute('accueil_usager');
+        return $this->renderForm('usager/new.html.twig', [
             'usager' => $usager,
             'form' => $form,
-        ]);*/
+        ]);
     }
 
     

@@ -28,7 +28,7 @@ class UsagerController extends AbstractController
         ]);*/
         $user = $this->getUser();
         return $this->render('usager/index.html.twig', [
-            'usagers' => $user
+            'usager' => $user
         ]);
     }
 
@@ -47,11 +47,14 @@ class UsagerController extends AbstractController
             // Encoder le mot de passe qui est en clair pour l’instant
             $hashedPassword = $passwordHasher->hashPassword($usager, $usager->getPassword());
             $usager->setPassword($hashedPassword);
+
             // Définir le rôle de l’usager qui va être créé
             $usager->setRoles(["ROLE_CLIENT"]);
+
             // Faire persister l’usager en BD
             $entityManager->persist($usager);
             $entityManager->flush();
+            
             // Après l’inscription, rediriger vers l’authentification
             return $this->redirectToRoute('app_login');
 

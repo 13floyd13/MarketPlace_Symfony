@@ -107,6 +107,14 @@ panier_vider:
   defaults:
     _locale: fr
 
+app_logout :
+  path: /{_locale}/logout
+  controller: App\Controller\SecurityController::logout
+  requirements:
+    _locale: '%app.supported_locales%'
+  defaults:
+    _locale: fr
+
 app_login :
   path: /{_locale}/login
   controller: App\Controller\SecurityController::login
@@ -115,13 +123,7 @@ app_login :
   defaults:
     _locale: fr
 
-app_logout :
-  path: /{_locale}/logout
-  controller: App\Controller\SecurityController::logout
-  requirements:
-    _locale: '%app.supported_locales%'
-  defaults:
-    _locale: fr
+
 
 accueil_usager:
   path: /{_locale}/usager/accueil
@@ -132,9 +134,17 @@ accueil_usager:
     _locale: fr
 
 inscription_usager:
-  path: /{_locale}/usager/connexion
+  path: /{_locale}/usager/inscription
   controller: App\Controller\UsagerController::new
   requirements:
     _locale: '%app.supported_locales%'
+  defaults:
+    _locale: fr
+
+usager_connexion:
+  path:  /{_locale}/usager/connexion
+  controller: App\Controller\UsagerController::new
+  requirements:
+    _locale:  '%app.supported_locales%'
   defaults:
     _locale: fr

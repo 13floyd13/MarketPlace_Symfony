@@ -3,41 +3,25 @@
 {% block title %}Usager index{% endblock %}
 
 {% block body %}
-    <h1>Usager index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Roles</th>
-                <th>Password</th>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for usager in usagers %}
-            <tr>
-                <td>{{ usager.id }}</td>
-                <td>{{ usager.email }}</td>
-                <td>{{ usager.roles ? usager.roles|json_encode : '' }}</td>
-                <td>{{ usager.password }}</td>
-                <td>{{ usager.nom }}</td>
-                <td>{{ usager.prenom }}</td>
-                <td>
-                    <a href="{{ path('app_usager_show', {'id': usager.id}) }}">show</a>
-                    <a href="{{ path('app_usager_edit', {'id': usager.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_usager_new') }}">Create new</a>
+    <div class="col-8 offset-2">
+        <div class="card">
+            <div class="card-header">
+                <h3><i class="fas fa-user-check"></i> Mon Compte</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped table-sm table-hover">
+                    <tr><th>N° Client</th><td>{{ usager.id }}</td></tr>
+                    <tr><th>Nom</th><td>{{ usager.nom }}</td></tr>
+                    <tr><th>Prénom</th><td>{{ usager.prenom }}</td></tr>
+                    <tr><th>Email</th><td>{{ usager.email }}</td></tr>
+                    <tr><th>Activité</th>
+                        <td>
+                            <a class="btn btn-primary" href="/mi5/fr/usager/commandes">
+                                <span class="badge badge-light">0</span> Commande(s)                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
 {% endblock %}

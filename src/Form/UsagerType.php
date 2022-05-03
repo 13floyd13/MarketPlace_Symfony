@@ -16,7 +16,6 @@ class UsagerType extends AbstractType
     {
         $builder
             ->add('email',EmailType::class)
-            //->add('roles')
             ->add('password', PasswordType::class)
             ->add('nom', TextType::class)
             ->add('prenom', TextType::class)
@@ -29,4 +28,5 @@ class UsagerType extends AbstractType
             'data_class' => Usager::class,
         ]);
     }
+
 }

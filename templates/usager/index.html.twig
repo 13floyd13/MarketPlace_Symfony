@@ -16,8 +16,9 @@
                     <tr><th>Email</th><td>{{ usager.email }}</td></tr>
                     <tr><th>Activité</th>
                         <td>
-                            <a class="btn btn-primary" href="/mi5/fr/usager/commandes">
-                                <span class="badge badge-light">0</span> Commande(s)                            </a>
+                            <a class="btn btn-primary" href="{{ path('commande_liste')}}">
+                                <span class="badge badge-light">{{ nombre_commande }}</span> Commande(s)                            
+                            </a>
                         </td>
                     </tr>
                 </table>

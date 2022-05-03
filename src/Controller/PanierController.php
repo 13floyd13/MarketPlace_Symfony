@@ -11,6 +11,7 @@ class PanierController extends AbstractController {
     // ainsi que les le nombre et le prix total
     public function index(PanierService $panier) {
 
+
         $lignes = $panier->getContenu();
         $nombreItems = $panier->getNbProduits();
         $total = $panier->getTotal();
@@ -69,4 +70,30 @@ class PanierController extends AbstractController {
         $panier->vider();
         return $this->redirectToRoute('panier_index');
     }
+
+    public function panier_validation(PanierService $panier) {
+
+        //if ($panier->getNbProduits() < 1) {
+           // return null;
+        //}
+
+        if ($this->getUser() === null) {
+            return $this->redirectToRoute('app_login');
+
+        } else {
+
+            $commande = $panier->panierToCommande($this->getUser());
+
+            return $this->render("validation_panier.html.twig",[
+                "date_commande" => $commande->getDateCommande()->format('d-m-Y'),
+                "numero_commande" => $commande->getId(),
+                "nom_usager" => $commande->getUsager()->getNom(),
+                "prenom_usager" => $commande->getUsager()->getPrenom(),
+                "email_usager" => $commande->getUsager()->getEmail(),
+                "numero_usager" => $commande->getUsager()->getId()
+            ]);
+            
+        }
+    }
+
 }

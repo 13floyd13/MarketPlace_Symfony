@@ -78,7 +78,8 @@
                 <ul class="navbar-nav my-0">
             <li class="nav-item dropdown">
                 <span class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="{{ asset('images/fr.png') }}" alt="{{ app.request.attributes.get('_locale')}}">
+                    <!--<img src="{{ asset('images/fr.png') }}" alt="{{ app.request.attributes.get('_locale')}}">-->
+                    <img src="{{ asset('images/'~app.request.attributes.get('_locale')~'.png')}}">
                 </span>
                 <div class="dropdown-menu" aria-labelledby="dropdown03" style="min-width: 5rem;">
                     {% for locale in supported_locales|split('|') %}
@@ -87,7 +88,8 @@
                             {% set params = app.request.attributes.get('_route_params') %}
 
                             <a class="dropdown-item" href="{{ path(route, params | merge({'_locale': locale })) }}">
-                                <img src="{{ asset('images/en.png') }}" alt="{{ locale }}">
+                                <!--<img src="{{ asset('images/en.png') }}" alt="{{ locale }}">-->
+                                <img src="{{ asset('images/'~app.request.attributes.get('_locale')~'.png')}}">
                             </a>
                         {% endif %}
                     {% endfor %}

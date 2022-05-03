@@ -2,6 +2,18 @@
 namespace App\Service;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Service\BoutiqueService;
+use Symfony\Component\Security\Core\User\User;
+use App\Entity\Commande;
+use App\Entity\LigneCommande;
+use App\Entity\Usager;
+use App\Repository\CommandeRepository;
+use App\Repository\LigneCommandeRepository;
+use App\Repository\UsagerRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Persistence\ManagerRegistry;
+
 // Service pour manipuler le panier et le stocker en session
 class PanierService {
 ////////////////////////////////////////////////////////////////////////////
@@ -10,11 +22,13 @@ const PANIER_SESSION = 'panier'; // Le nom de la variable de session du panier
 private $session; // Le service Session
 private $boutique; // Le service Boutique
 private $panier; // Tableau associatif idProduit => quantite
+private $commandeRepository;
+private $ligneCommandeRepository;
 // donc $this->panier[$i] = quantite du produit dont l'id = $i
 // constructeur du service
 
 
-public function __construct(SessionInterface $session, BoutiqueService $boutique) {
+public function __construct(SessionInterface $session, BoutiqueService $boutique, CommandeRepository $commandeRepository, LigneCommandeRepository $ligneCommandeRepository ) {
 // Récupération des services session et BoutiqueService
 $this->boutique = $boutique;
 $this->session = $session;
@@ -22,6 +36,9 @@ $this->session = $session;
 //$this->session->clear(); // A utiliser si besoin de reset la session
 
 $this->panier = $session->get(self::PANIER_SESSION, array());// initialisation du Panier 
+$this->commandeRepository = $commandeRepository;
+$this->ligneCommandeRepository = $ligneCommandeRepository;
+
 
 }
 // renvoie le contenu du panier
@@ -107,4 +124,31 @@ public function vider() {
     $this->panier = [];
     $this->session->set(self::PANIER_SESSION, $this->panier);
 }
+
+public function panierToCommande(Usager $usager): Commande
+    {
+        if($this->panier) {
+            $commande = new Commande();
+            $commande->setUsager($usager)
+                ->setDateCommande(date_create())
+                ->setStatut("Confirmé");
+
+            $this->commandeRepository->add($commande);
+
+            foreach($this->panier as $idProduit => $quantite){
+                $produit = $this->boutique->findProduitById($idProduit);
+                $ligne = new LigneCommande();
+                $ligne->setCommande($commande)
+                    ->setArticle($produit)
+                    ->setPrix($produit->getPrix()*$quantite)
+                    ->setQuantite($quantite);
+
+                $this->ligneCommandeRepository->add($ligne);
+            }
+            $this->session->set(self::PANIER_SESSION, $this->panier);
+
+            $this->vider();
+            return $commande;
+        }
+    }
 }

@@ -12,6 +12,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 /**
  * @Route("/usager")
@@ -27,8 +31,11 @@ class UsagerController extends AbstractController
             'usagers' => $usagerRepository->findAll(),
         ]);*/
         $user = $this->getUser();
+        $usager = $usagerRepository->findOneByEmail($user->getUserIdentifier());
+
         return $this->render('usager/index.html.twig', [
-            'usager' => $user
+            'usager' => $user,
+            'nombre_commande' => count($usager->getCommande())
         ]);
     }
 
@@ -36,11 +43,33 @@ class UsagerController extends AbstractController
      * @Route("/new", name="app_usager_new", methods={"GET", "POST"})
      */
     public function new(Request $request, UsagerRepository $usagerRepository, EntityManagerInterface $entityManager,
-                        UserPasswordHasherInterface $passwordHasher): Response
+                        UserPasswordHasherInterface $passwordHasher, AuthenticationUtils $authenticationUtils): Response
     {
+
         $usager = new Usager();
         $form = $this->createForm(UsagerType::class, $usager);
         $form->handleRequest($request);
+
+        $formConnexion = $this->createFormBuilder($usager)
+            ->add('email',EmailType::class)
+            ->add('password', PasswordType::class)
+            ->add('save', SubmitType::class)
+            ->getForm()
+            ;
+
+        if($formConnexion->isSubmitted() && $formConnexion->isValid()) {
+            var_dump('test');
+            if ($this->getUser()) {
+                return $this->redirectToRoute('accueil_usager', ['usager' => $this->getUser()]);
+             }
+    
+            // get the login error if there is one
+            $error = $authenticationUtils->getLastAuthenticationError();
+            // last username entered by the user
+            $lastUsername = $authenticationUtils->getLastUsername();
+    
+            return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -66,6 +95,7 @@ class UsagerController extends AbstractController
         return $this->renderForm('usager/new.html.twig', [
             'usager' => $usager,
             'form' => $form,
+            'formConnexion' => $formConnexion
         ]);
     }
 

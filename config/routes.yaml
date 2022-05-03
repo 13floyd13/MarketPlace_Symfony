@@ -148,3 +148,19 @@ usager_connexion:
     _locale:  '%app.supported_locales%'
   defaults:
     _locale: fr
+
+panier_validation:
+  path:  /{_locale}/panier/validation/
+  controller: App\Controller\PanierController::panier_validation
+  requirements:
+    _locale:  '%app.supported_locales%'
+  defaults:
+    _locale: fr
+
+commande_liste:
+  path:  /{_locale}/commande/liste/
+  controller: App\Controller\CommandeController::index
+  requirements:
+    _locale:  '%app.supported_locales%'
+  defaults:
+    _locale: fr

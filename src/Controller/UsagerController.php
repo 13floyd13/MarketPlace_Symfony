@@ -71,7 +71,11 @@ class UsagerController extends AbstractController
             return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
         }
 
+        
+
         if ($form->isSubmitted() && $form->isValid()) {
+
+            
 
             // Encoder le mot de passe qui est en clair pour l’instant
             $hashedPassword = $passwordHasher->hashPassword($usager, $usager->getPassword());
@@ -79,6 +83,11 @@ class UsagerController extends AbstractController
 
             // Définir le rôle de l’usager qui va être créé
             $usager->setRoles(["ROLE_CLIENT"]);
+
+            $usagers = $usagerRepository->findAll();
+            if (in_array($usager->getUserIdentifier(), $usagers)){
+                return $this->redirectToRoute('accueil_page');
+            }
 
             // Faire persister l’usager en BD
             $entityManager->persist($usager);

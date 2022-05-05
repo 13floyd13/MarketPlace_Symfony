@@ -22,6 +22,7 @@ class DefaultController extends AbstractController {
     public function navBar(PanierService $panier) {
 
         $nbArticles = $panier->getNbProduits();
+
         return $this->render("nbArticlesNavBar.html.twig",[
             'nbArticles' => $nbArticles
         ]);

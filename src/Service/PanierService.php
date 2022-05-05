@@ -13,6 +13,8 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\Types\Float_;
+use phpDocumentor\Reflection\Types\Integer;
 
 // Service pour manipuler le panier et le stocker en session
 class PanierService {
@@ -127,8 +129,9 @@ public function vider() {
 
 public function panierToCommande(Usager $usager): Commande
     {
+        $commande = new Commande();
         if($this->panier) {
-            $commande = new Commande();
+            
             $commande->setUsager($usager)
                 ->setDateCommande(date_create())
                 ->setStatut("Confirmé");
@@ -148,7 +151,20 @@ public function panierToCommande(Usager $usager): Commande
             $this->session->set(self::PANIER_SESSION, $this->panier);
 
             $this->vider();
-            return $commande;
+            
         }
+        return $commande;
     }
+
+public function getPrixCommande($commande): Float {
+
+    $lignes = $this->ligneCommandeRepository->findByCommande($commande);
+    $prix = 0.00;
+
+    foreach( $lignes as $ligne) {
+        $prix += $ligne->getPrix();
+    }
+
+    return $prix;
+}
 }

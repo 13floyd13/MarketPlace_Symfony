@@ -73,9 +73,13 @@ class PanierController extends AbstractController {
 
     public function panier_validation(PanierService $panier) {
 
-        //if ($panier->getNbProduits() < 1) {
-           // return null;
-        //}
+        if ($panier->getNbProduits() < 1) {
+            $this->get('session')->getFlashBag()->add(
+                'notice',
+                'Panier vide!'
+            );
+           return $this->redirectToRoute('panier_index');
+        }
 
         if ($this->getUser() === null) {
             return $this->redirectToRoute('app_login');
@@ -83,6 +87,7 @@ class PanierController extends AbstractController {
         } else {
 
             $commande = $panier->panierToCommande($this->getUser());
+            $prix = $panier->getPrixCommande($commande);
 
             return $this->render("validation_panier.html.twig",[
                 "date_commande" => $commande->getDateCommande()->format('d-m-Y'),
@@ -90,7 +95,8 @@ class PanierController extends AbstractController {
                 "nom_usager" => $commande->getUsager()->getNom(),
                 "prenom_usager" => $commande->getUsager()->getPrenom(),
                 "email_usager" => $commande->getUsager()->getEmail(),
-                "numero_usager" => $commande->getUsager()->getId()
+                "numero_usager" => $commande->getUsager()->getId(),
+                "prix" => $prix
             ]);
             
         }

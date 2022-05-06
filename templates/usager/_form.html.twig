@@ -3,7 +3,13 @@
             <div class="card-header">
                 <h3><i class="fas fa-user-check"></i> Déjà Membre : Connexion</h3>
             </div>
+            {% for message in app.flashes("infoConnexion") %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
             <div class="card-body">
+            {#
                 {{ form_start(formConnexion) }}
                 <div class="form-group row">
                     {{ form_label(formConnexion.email) }}
@@ -14,9 +20,12 @@
                     {{ form_widget(formConnexion.password,  {'attr': {'class' : 'form-control'}}) }}
                 </div>
                 <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+                {{ form_widget(form._token) }}
                 {{ form_end(formConnexion) }}
+
+                #}
                 
-                <!--<form method="post" >
+                <form method="post" action="{{ path('app_login') }}">
                     <div class="form-group">
                         <label for="inputEmail">Email</label>
                         <input type="email" value="" name="email" id="inputEmail" class="form-control" required autofocus>
@@ -24,15 +33,17 @@
                     <div class="form-group">
                         <label for="inputPassword">Mot de Passe</label>
                         <input type="password" name="password" id="inputPassword" class="form-control" required>
-                        <input type="hidden" name="_csrf_token"
-                               value="GwT_zvKmVRuZVhQQV1n66uYnv1Mm7tDjVQVV-_InCLg">
+
                     </div>
                     <div class="col-md-12 btn-group" style="padding:0px">
+                    <input type="hidden" name="_csrf_token"
+                     value="{{ csrf_token('authenticate') }}"
+    >
                         <button class="btn btn-primary" type="submit">
                             Connexion                        
                         </button>
                     </div>
-                </form>-->
+                </form>
             </div>
         </div>
         <div class="col-md-1"></div>
@@ -40,6 +51,11 @@
         <div class="card-header">
             <h3><i class="fas fa-user-plus"></i> Nouveau Membre : Inscription</h3>
         </div>
+        {% for message in app.flashes("info") %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
         <div class="card-body">
             {{ form_start(form) }}
             <div class="form-group row">

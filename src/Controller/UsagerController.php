@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Usager;
+use App\Form\UsagerConnexion;
 use App\Form\UsagerType;
 use App\Repository\UsagerRepository;
 use Doctrine\ORM\EntityManager;
@@ -14,6 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
@@ -46,19 +48,28 @@ class UsagerController extends AbstractController
                         UserPasswordHasherInterface $passwordHasher, AuthenticationUtils $authenticationUtils): Response
     {
 
+
         $usager = new Usager();
         $form = $this->createForm(UsagerType::class, $usager);
         $form->handleRequest($request);
 
-        $formConnexion = $this->createFormBuilder($usager)
+        $formConnexion = $this->createForm(UsagerConnexion::class, $usager, [
+            'action' => $this->generateUrl('app_login'),
+            'method' => 'POST',
+        ]);
+        $formConnexion->handleRequest($request);
+
+        /*$formConnexion = $this->createFormBuilder($usager)
             ->add('email',EmailType::class)
             ->add('password', PasswordType::class)
             ->add('save', SubmitType::class)
+            ->setAction($this->generateUrl('app_login'))
+            ->setMethod('POST')
             ->getForm()
-            ;
+            ;*/
+
 
         if($formConnexion->isSubmitted() && $formConnexion->isValid()) {
-            var_dump('test');
             if ($this->getUser()) {
                 return $this->redirectToRoute('accueil_usager', ['usager' => $this->getUser()]);
              }
@@ -85,9 +96,17 @@ class UsagerController extends AbstractController
             $usager->setRoles(["ROLE_CLIENT"]);
 
             $usagers = $usagerRepository->findAll();
-            if (in_array($usager->getUserIdentifier(), $usagers)){
-                return $this->redirectToRoute('accueil_page');
+            foreach ($usagers as $u){
+                if ($u->getUserIdentifier() === $usager->getUserIdentifier()) {
+
+                    $this->addFlash(
+                        "info",
+                        "Compte déja existant"
+                    );
+                    return $this->redirectToRoute('inscription_usager');
+                }
             }
+            
 
             // Faire persister l’usager en BD
             $entityManager->persist($usager);

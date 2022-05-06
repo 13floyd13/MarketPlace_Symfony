@@ -57,13 +57,14 @@
                 </li>
             {% endif %}
 
-
+            {% if is_granted("ROLE_ADMIN") %}
             <li class="nav-item" 
                 data-toggle="tooltip" title="Ne devra être visible que pour l'Admin" data-placement="right" data-html="true">
-                <span class="nav-link disabled" href="">
+                <span class="nav-link " href="">
                     <i class="fas fa-tools"></i> BackOffice
                 </span>
             </li>
+            {% endif %}
         </ul>
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" id="searchString" type="text" 

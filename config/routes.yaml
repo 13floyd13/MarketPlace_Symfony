@@ -164,3 +164,27 @@ commande_liste:
     _locale:  '%app.supported_locales%'
   defaults:
     _locale: fr
+
+admin_creation:
+  path:  /{_locale}/backoffice/
+  controller: App\Controller\UsagerController::gestionUsager
+  requirements:
+    _locale:  '%app.supported_locales%'
+  defaults:
+    _locale: fr
+
+admin_suppression:
+  path:  /{_locale}/backoffice/suppression/{usagerId}
+  controller: App\Controller\UsagerController::suppressionUsager
+  requirements:
+    _locale:  '%app.supported_locales%'
+  defaults:
+    _locale: fr
+
+admin_upgrade:
+  path:  /{_locale}/backoffice/upgrade/{usagerId}
+  controller: App\Controller\UsagerController::upgradeUsagerToAdmin
+  requirements:
+    _locale:  '%app.supported_locales%'
+  defaults:
+    _locale: fr

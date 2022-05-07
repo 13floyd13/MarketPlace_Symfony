@@ -8,7 +8,9 @@ use App\Form\UsagerType;
 use App\Repository\UsagerRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,6 +20,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * @Route("/usager")
@@ -127,5 +130,39 @@ class UsagerController extends AbstractController
         ]);
     }
 
-    
+    public function gestionUsager(UsagerRepository $usagerRepository) {
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $usagers = $usagerRepository->findAll();
+            return $this->renderForm('administration/gestion.html.twig', [
+                'usagers' => $usagers
+            ]);
+        } 
+    }
+
+
+    public function suppressionUsager($usagerId, UsagerRepository $usagerRepository) {
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+
+            $usager = $usagerRepository->findOneById($usagerId);
+            $usagerRepository->remove($usager);
+            return $this->redirectToRoute('admin_creation');
+        }
+
+    }
+
+    public function upgradeUsagerToAdmin($usagerId, UsagerRepository $usagerRepository) {
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+
+            $usager = $usagerRepository->findOneById($usagerId);
+            $usagerRepository->upgradeRoleAdmin($usager);
+            return $this->redirectToRoute('admin_creation');
+        }
+    }
+
+
+
+
 }

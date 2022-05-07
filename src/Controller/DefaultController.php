@@ -27,4 +27,13 @@ class DefaultController extends AbstractController {
             'nbArticles' => $nbArticles
         ]);
     }
+
+    public function aside(PanierService $panier) {
+
+        $articles = $panier->getTopSales();
+
+        return $this->render("topSales.html.twig",[
+            'articles' => $articles
+        ]);
+    }
 }

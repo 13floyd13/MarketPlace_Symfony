@@ -45,17 +45,14 @@ class LigneCommandeRepository extends ServiceEntityRepository
         }
     }
 
-    /*public function findTopFiveProductsSales() : array {
+    public function findTopProductsSales() : array {
 
-        $entityManager = $this->getEntityManager();
-        $query = $entityManager->createQuery(
-            'SELECT l, p
-            FROM App\Entity\LigneCommande l,  App\Entity\Produit p'
-        );
-
-        //dump($query->getResult());
-        return $query->getResult();
-    }*/
+        $dql ='SELECT p as produit, SUM(l.quantite) as quantite  FROM App\Entity\LigneCommande l INNER JOIN App\Entity\Produit p WITH l.article = p.id GROUP BY p ORDER BY quantite DESC';
+        $query = $this->getEntityManager()
+            ->createQuery($dql)
+            ->setMaxResults(4);
+        return $query->execute();
+    }
 
     // /**
     //  * @return LigneCommande[] Returns an array of LigneCommande objects

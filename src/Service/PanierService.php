@@ -176,11 +176,16 @@ class PanierService {
     }
 
 
-    public function getCommande($idCommande){
+    public function getCommande($idCommande) {
         return $this->commandeRepository->findOneById($idCommande);
     }
 
     public function getLignes($commande): array {
+
         return $this->ligneCommandeRepository->findByCommande($commande);
+    }
+
+    public function getTopSales() {
+        return $this->ligneCommandeRepository->findTopProductsSales();
     }
 }

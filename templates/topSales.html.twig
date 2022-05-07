@@ -1,0 +1,12 @@
+{% for article in articles %}
+
+<ul class="list-group">
+    <a href=" {{ path('rayon_page', {'idCategorie': article.produit.categorie.id}) }}">
+        <li class="list-group-item text-center clickable">
+            <img src="{{ asset(article.produit.visuel) }}" style="height: 40px;"/>
+                <p>{{article.produit.libelle}}
+                <br>
+                <i>{{article.quantite}} ventes </i></p>
+        </li>
+     </a>
+{% endfor %}

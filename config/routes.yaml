@@ -194,3 +194,11 @@ admin_upgrade:
     _locale:  '%app.supported_locales%'
   defaults:
     _locale: fr
+
+email:
+  path:  /{_locale}/email/{usagerEmail}
+  controller: App\Controller\MailerController::sendEmail
+  requirements:
+    _locale:  '%app.supported_locales%'
+  defaults:
+    _locale: fr

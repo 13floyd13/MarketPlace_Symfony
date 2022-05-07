@@ -70,7 +70,7 @@ class PanierController extends AbstractController {
 
     //vérification qu'un utilisateur est connecté
     //renvoie un template avec le détail de la commande passée
-    public function panier_validation(PanierService $panier) {
+    public function panier_validation(PanierService $panier, MailerController $mailerController) {
 
         if ($this->getUser() === null) {
             return $this->redirectToRoute('app_login');
@@ -79,6 +79,10 @@ class PanierController extends AbstractController {
             $commande = $panier->panierToCommande($this->getUser());
             $prix = $panier->getPrixCommande($commande);
             $lignes = $panier->getLignes($commande);
+
+            /*return $this->redirectToRoute(
+                'email',
+                ['usagerEmail' => $this->getUser()->getUserIdentifier()]);*/
 
             return $this->render("validation_panier.html.twig",[
                 "date_commande" => $commande->getDateCommande()->format('d-m-Y'),
@@ -90,6 +94,7 @@ class PanierController extends AbstractController {
                 "prix" => $prix,
                 "lignes" => $lignes
             ]);
+
             
         }
     }

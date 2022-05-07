@@ -163,6 +163,14 @@ commande_liste:
   defaults:
     _locale: fr
 
+commande_detail:
+  path:  /{_locale}/commande/liste/detail/{commandeId}
+  controller: App\Controller\CommandeController::detail
+  requirements:
+    _locale:  '%app.supported_locales%'
+  defaults:
+    _locale: fr
+
 admin_creation:
   path:  /{_locale}/backoffice/
   controller: App\Controller\UsagerController::gestionUsager

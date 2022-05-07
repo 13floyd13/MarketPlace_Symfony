@@ -20,7 +20,7 @@
 {% for commande in commandes %}
     <div class="col-8 offset-2">
             <div class="card">
-                <div class="card-body">
+                <div class="card clickable" onclick="location = '{{ path('commande_detail', {'commandeId': commande.id}) }} '">
                     <table class="table table-striped table-sm table-hover">
                         <tr><th>N° Commande</th><td>{{ commande.id }}</td></tr>
                         <tr><th>Date Commande</th><td>{{ commande.getDateCommande()|date('d-m-Y') }}</td></tr>                         

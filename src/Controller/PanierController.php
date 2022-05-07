@@ -78,6 +78,7 @@ class PanierController extends AbstractController {
         } else {
             $commande = $panier->panierToCommande($this->getUser());
             $prix = $panier->getPrixCommande($commande);
+            $lignes = $panier->getLignes($commande);
 
             return $this->render("validation_panier.html.twig",[
                 "date_commande" => $commande->getDateCommande()->format('d-m-Y'),
@@ -86,7 +87,8 @@ class PanierController extends AbstractController {
                 "prenom_usager" => $commande->getUsager()->getPrenom(),
                 "email_usager" => $commande->getUsager()->getEmail(),
                 "numero_usager" => $commande->getUsager()->getId(),
-                "prix" => $prix
+                "prix" => $prix,
+                "lignes" => $lignes
             ]);
             
         }

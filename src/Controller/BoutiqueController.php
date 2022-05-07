@@ -17,6 +17,7 @@ class BoutiqueController extends AbstractController {
         return $this->render("boutique.html.twig",[
             "categories" => $categories, "nb_rayons" => count($categories)
         ]);
+
     }
 
     // retourne tous les produits d'une catégorie

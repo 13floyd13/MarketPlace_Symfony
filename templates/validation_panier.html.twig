@@ -15,7 +15,12 @@
                     <tr><th>Email</th><td>{{ email_usager }}</td></tr>
                     <tr><th>N° Commande</th><td>{{ numero_commande }}</td></tr>
                     <tr><th>Date Commande</th><td>{{ date_commande }}</td></tr>
-                    <tr><th>Prix</th><td>{{ prix }}</td></tr>
+                    <tr><th>Prix Total</th><td>{{ prix }}</td></tr>
+                    {% for ligne in lignes %}
+                        <tr><th>Poduit</th><td>{{ ligne.getArticle().getLibelle() }}</td></tr>
+                        <tr><th>Quantité</th><td>{{ ligne.quantite }}</td></tr>
+                    {% endfor %}
+
 
                     
                 </table>

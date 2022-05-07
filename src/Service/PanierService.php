@@ -174,4 +174,13 @@ class PanierService {
 
         return $prix;
     }
+
+
+    public function getCommande($idCommande){
+        return $this->commandeRepository->findOneById($idCommande);
+    }
+
+    public function getLignes($commande): array {
+        return $this->ligneCommandeRepository->findByCommande($commande);
+    }
 }

@@ -12,10 +12,12 @@ class UserFixtures extends Fixture
     public const ADMIN_USER_REFERENCE = 'admin-user';
     private ?UserPasswordHasherInterface $passwordHasher;
 
+    //constructeur pour appeler le password hasher
     public function __construct(UserPasswordHasherInterface $passwordHasher){
         $this->passwordHasher = $passwordHasher;
     }
 
+    //creation d'un admin
     public function load(ObjectManager $manager)
     {
         $usagerAdmin = new Usager();

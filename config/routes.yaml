@@ -123,8 +123,6 @@ app_login :
   defaults:
     _locale: fr
 
-
-
 accueil_usager:
   path: /{_locale}/usager/accueil
   controller: App\Controller\UsagerController::index

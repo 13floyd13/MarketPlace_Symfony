@@ -23,18 +23,16 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
- * @Route("/usager")
+ * Route("/usager")
  */
 class UsagerController extends AbstractController
 {
     /**
-     * @Route("/", name="app_usager_index", methods={"GET"})
+     * Route("/", name="app_usager_index", methods={"GET"})
      */
     public function index(UsagerRepository $usagerRepository): Response
     {
-        /*return $this->render('usager/index.html.twig', [
-            'usagers' => $usagerRepository->findAll(),
-        ]);*/
+
         $user = $this->getUser();
         $usager = $usagerRepository->findOneByEmail($user->getUserIdentifier());
 
@@ -45,7 +43,7 @@ class UsagerController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="app_usager_new", methods={"GET", "POST"})
+     * Route("/new", name="app_usager_new", methods={"GET", "POST"})
      */
     public function new(Request $request, UsagerRepository $usagerRepository, EntityManagerInterface $entityManager,
                         UserPasswordHasherInterface $passwordHasher, AuthenticationUtils $authenticationUtils): Response
@@ -53,9 +51,12 @@ class UsagerController extends AbstractController
 
 
         $usager = new Usager();
+
+        //formulaire pour l'inscription
         $form = $this->createForm(UsagerType::class, $usager);
         $form->handleRequest($request);
 
+        // formulaire pour la connexion
         $formConnexion = $this->createForm(UsagerConnexion::class, $usager, [
             'action' => $this->generateUrl('app_login'),
             'method' => 'POST',
@@ -71,7 +72,7 @@ class UsagerController extends AbstractController
             ->getForm()
             ;*/
 
-
+        // gestion du formulaire de connexion
         if($formConnexion->isSubmitted() && $formConnexion->isValid()) {
             if ($this->getUser()) {
                 return $this->redirectToRoute('accueil_usager', ['usager' => $this->getUser()]);
@@ -86,10 +87,8 @@ class UsagerController extends AbstractController
         }
 
         
-
+        // gestion du formulaire d'inscription
         if ($form->isSubmitted() && $form->isValid()) {
-
-            
 
             // Encoder le mot de passe qui est en clair pour l’instant
             $hashedPassword = $passwordHasher->hashPassword($usager, $usager->getPassword());
@@ -98,10 +97,13 @@ class UsagerController extends AbstractController
             // Définir le rôle de l’usager qui va être créé
             $usager->setRoles(["ROLE_CLIENT"]);
 
+            //vérification si l'utilisateur existe déja avant de l'inscrire
+            //vérification sur l'email
             $usagers = $usagerRepository->findAll();
             foreach ($usagers as $u){
                 if ($u->getUserIdentifier() === $usager->getUserIdentifier()) {
 
+                    //création d'un méssage flash d'erreur si l'utilisateur existe déja
                     $this->addFlash(
                         "info",
                         "Compte déja existant"
@@ -110,7 +112,6 @@ class UsagerController extends AbstractController
                 }
             }
             
-
             // Faire persister l’usager en BD
             $entityManager->persist($usager);
             $entityManager->flush();
@@ -118,8 +119,6 @@ class UsagerController extends AbstractController
             // Après l’inscription, rediriger vers l’authentification
             return $this->redirectToRoute('app_login');
 
-            //$usagerRepository->add($usager);
-            //return $this->redirectToRoute('app_usager_index', [], Response::HTTP_SEE_OTHER);
         }
 
         //return $this->redirectToRoute('accueil_usager');
@@ -130,6 +129,7 @@ class UsagerController extends AbstractController
         ]);
     }
 
+    //fonction accessible uniquement par l'admin pour avoir la liste des utilisateurs sur le backoffice
     public function gestionUsager(UsagerRepository $usagerRepository) {
 
         if ($this->isGranted('ROLE_ADMIN')) {
@@ -140,7 +140,7 @@ class UsagerController extends AbstractController
         } 
     }
 
-
+    // fonction accesible uniquement par l'admin pour supprimer des utilisateurs depuis le backoffice
     public function suppressionUsager($usagerId, UsagerRepository $usagerRepository) {
 
         if ($this->isGranted('ROLE_ADMIN')) {
@@ -152,6 +152,7 @@ class UsagerController extends AbstractController
 
     }
 
+    // fonction accessible uniquement par l'admin pour passer le role d'un  utilisateur en admin
     public function upgradeUsagerToAdmin($usagerId, UsagerRepository $usagerRepository) {
 
         if ($this->isGranted('ROLE_ADMIN')) {

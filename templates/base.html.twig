@@ -45,7 +45,10 @@
             $("#searchButton").click(
                 function () {
                     var searchString = $('#searchString').val().trim();
-                    location = ('/fr/boutique/chercher/' + searchString); 
+                    //location = ('/fr/boutique/chercher/' + searchString); 
+                    var path = '{{ path('recherche_page', {'recherche': 'searchString'}) }}';
+                    path = path.replace('searchString', searchString);
+                    location = path;
                     return false;
                 });
         });

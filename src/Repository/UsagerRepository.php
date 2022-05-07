@@ -62,6 +62,7 @@ class UsagerRepository extends ServiceEntityRepository implements PasswordUpgrad
         $this->_em->flush();
     }
 
+    // pour passer le role d'un utilisateur en admin
     public function upgradeRoleAdmin($usager){
         $usager->setRoles(["ROLE_ADMIN"]);
         $this->_em->persist($usager);

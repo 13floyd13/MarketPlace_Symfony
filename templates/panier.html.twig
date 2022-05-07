@@ -9,7 +9,7 @@
                 <b>{{total}} €</b>
             </h1>
             <div class="col-md-12 btn-group btn-group-lg" role="group">
-                <a class="btn btn-primary" href="/mi5/fr/boutique">
+                <a class="btn btn-primary" href="{{ path('boutique_page') }}">
                     Continuer les Courses                
                 </a>
                 {% if total == 0 %}
@@ -38,7 +38,7 @@
                         </thead>
                         <tbody>
                         {% for ligne in lignes %}
-                                                            <tr>
+                                <tr>
                                     <td>
                                         <img src="{{ asset( ligne['produit'].getVisuel() ) }}" class="cart-img-produit" alt={{ ligne['produit'].getLibelle() }}>
                                     </td>

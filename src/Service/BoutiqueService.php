@@ -194,12 +194,3 @@ class BoutiqueService {
 
 
 
-/* class BoutiqueService() {
-    private $prodRepo;
-    private $catRepo;
-
-    __construct(... $prodRepo, $catRepo){
-        $this->prodRepo = $prodRepo
-        ...
-    }
-}*/

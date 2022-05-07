@@ -34,11 +34,6 @@ class BoutiqueController extends AbstractController {
 
         $produits = $boutique->findProduitsByLibelleOrTexte($recherche);
 
-
-        // $produits = $this->getDoctrine()
-        // ->getRepository(Produit::class)
-        // ->findByLibelle($recherche);
-
         return $this->render('recherche.html.twig',[
             "produits" => $produits, "recherche"=> $recherche
         ]);

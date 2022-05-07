@@ -11,7 +11,6 @@ class PanierController extends AbstractController {
     // ainsi que les le nombre et le prix total
     public function index(PanierService $panier) {
 
-
         $lignes = $panier->getContenu();
         $nombreItems = $panier->getNbProduits();
         $total = $panier->getTotal();
@@ -49,7 +48,6 @@ class PanierController extends AbstractController {
 
         $panier->ajouterProduit($idProduit, $quantite);
         return $this->redirectToRoute('panier_index');
-
     }
 
     // permet de retirer un produit du panier en supprimant toute la ligne, peu importe la quantité
@@ -59,7 +57,6 @@ class PanierController extends AbstractController {
 
         $panier->supprimerProduit($idProduit);
         return $this->redirectToRoute('panier_index');
-
     }
 
     // permet de retirer tous les produits du panier
@@ -71,21 +68,14 @@ class PanierController extends AbstractController {
         return $this->redirectToRoute('panier_index');
     }
 
+    //vérification qu'un utilisateur est connecté
+    //renvoie un template avec le détail de la commande passée
     public function panier_validation(PanierService $panier) {
-
-        if ($panier->getNbProduits() < 1) {
-            $this->get('session')->getFlashBag()->add(
-                'notice',
-                'Panier vide!'
-            );
-           return $this->redirectToRoute('panier_index');
-        }
 
         if ($this->getUser() === null) {
             return $this->redirectToRoute('app_login');
 
         } else {
-
             $commande = $panier->panierToCommande($this->getUser());
             $prix = $panier->getPrixCommande($commande);
 

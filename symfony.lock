@@ -1,4 +1,7 @@
 {
+    "container-interop/container-interop": {
+        "version": "1.2.0"
+    },
     "doctrine/annotations": {
         "version": "1.13",
         "recipe": {
@@ -100,6 +103,27 @@
     },
     "laminas/laminas-code": {
         "version": "4.5.1"
+    },
+    "laminas/laminas-escaper": {
+        "version": "2.10.0"
+    },
+    "laminas/laminas-server": {
+        "version": "2.11.1"
+    },
+    "laminas/laminas-soap": {
+        "version": "2.10.0"
+    },
+    "laminas/laminas-stdlib": {
+        "version": "3.7.1"
+    },
+    "laminas/laminas-uri": {
+        "version": "2.9.1"
+    },
+    "laminas/laminas-validator": {
+        "version": "2.17.0"
+    },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.5.0"
     },
     "monolog/monolog": {
         "version": "2.3.5"
